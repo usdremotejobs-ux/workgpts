@@ -10,13 +10,6 @@ const openrouter = createOpenRouter({
     apiKey: process.env.OPENROUTER_API_KEY,
 });
 
-// Create a new ratelimiter, that allows 3 requests per 24 hours
-const ratelimit = new Ratelimit({
-    redis: Redis.fromEnv(),
-    limiter: Ratelimit.slidingWindow(3, "24 h"),
-    analytics: true,
-});
-
 export async function POST(req: Request) {
     // 1. Get IP address
     const ip = req.headers.get("x-forwarded-for") ?? "127.0.0.1";
@@ -25,7 +18,14 @@ export async function POST(req: Request) {
     const isLocalhost = ip === "127.0.0.1" || ip === "::1" || process.env.NODE_ENV === "development";
 
     if (!isLocalhost) {
-        // 3. Check rate limit for production users
+        // 3. Lazily create the ratelimiter only when needed (avoids crash if env vars are placeholder values)
+        const ratelimit = new Ratelimit({
+            redis: Redis.fromEnv(),
+            limiter: Ratelimit.slidingWindow(3, "24 h"),
+            analytics: true,
+        });
+
+        // 4. Check rate limit for production users
         const { success, limit, reset, remaining } = await ratelimit.limit(`ratelimit_${ip}`);
 
         if (!success) {

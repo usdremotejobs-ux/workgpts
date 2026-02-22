@@ -8,14 +8,20 @@ export default function Home() {
     <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
       {/* Hero Section */}
       <section className="text-center space-y-6 pb-16 pt-8 md:pb-24">
-        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent dark:from-gray-100 dark:to-gray-400">
-          Upgrade Your Career Profile With AI
+        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight">
+          Upgrade Your Career Profile With{" "}
+          <span style={{ color: "#055149" }}>AI</span>
         </h1>
         <p className="max-w-2xl mx-auto text-xl text-muted-foreground">
           Generate professional buzzwords, optimize your LinkedIn profile, and craft powerful negotiation messages in seconds.
         </p>
         <div className="pt-4 mt-8 flex justify-center gap-4">
-          <Button size="lg" className="rounded-full px-8 shadow-md hover:shadow-lg transition-all" asChild>
+          <Button
+            size="lg"
+            className="rounded-full px-8 shadow-md hover:shadow-lg transition-all text-white hover:opacity-90"
+            style={{ backgroundColor: "#055149" }}
+            asChild
+          >
             <Link href="#tools">Try Free Tools</Link>
           </Button>
         </div>
@@ -28,8 +34,8 @@ export default function Home() {
           {/* Tool Card 1 */}
           <Card className="hover:shadow-xl transition-shadow bg-card/80 backdrop-blur-sm border-white/20 dark:border-white/10 flex flex-col justify-between">
             <CardHeader>
-              <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                <BriefcaseBusiness className="h-6 w-6 text-primary" />
+              <div className="h-12 w-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: "#05514915" }}>
+                <BriefcaseBusiness className="h-6 w-6" style={{ color: "#055149" }} />
               </div>
               <CardTitle>Professional Buzzword Generator</CardTitle>
               <CardDescription className="text-base pt-2">
@@ -46,8 +52,8 @@ export default function Home() {
           {/* Tool Card 2 */}
           <Card className="hover:shadow-xl transition-shadow bg-card/80 backdrop-blur-sm border-white/20 dark:border-white/10 flex flex-col justify-between">
             <CardHeader>
-              <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                <UserRoundSearch className="h-6 w-6 text-primary" />
+              <div className="h-12 w-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: "#05514915" }}>
+                <UserRoundSearch className="h-6 w-6" style={{ color: "#055149" }} />
               </div>
               <CardTitle>LinkedIn Profile Optimizer</CardTitle>
               <CardDescription className="text-base pt-2">
@@ -64,8 +70,8 @@ export default function Home() {
           {/* Tool Card 3 */}
           <Card className="hover:shadow-xl transition-shadow bg-card/80 backdrop-blur-sm border-white/20 dark:border-white/10 flex flex-col justify-between">
             <CardHeader>
-              <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                <MessagesSquare className="h-6 w-6 text-primary" />
+              <div className="h-12 w-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: "#05514915" }}>
+                <MessagesSquare className="h-6 w-6" style={{ color: "#055149" }} />
               </div>
               <CardTitle>Negotiation Message Generator</CardTitle>
               <CardDescription className="text-base pt-2">
