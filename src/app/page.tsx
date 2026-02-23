@@ -61,8 +61,8 @@ export default function Home() {
               </CardDescription>
             </CardHeader>
             <CardFooter>
-              <Button variant="outline" className="w-full" asChild disabled>
-                <Link href="/linkedin-optimizer">Coming Soon</Link>
+              <Button variant="outline" className="w-full" asChild>
+                <Link href="/linkedin-optimizer">Open Tool →</Link>
               </Button>
             </CardFooter>
           </Card>
