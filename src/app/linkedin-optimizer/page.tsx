@@ -17,7 +17,7 @@ export default function LinkedInOptimizer() {
     const [isProcessing, setIsProcessing] = useState(false);
     const [parsedData, setParsedData] = useState<ParsedProfile | null>(null);
     const [targetRole, setTargetRole] = useState("");
-    const [copied, setCopied] = useState(false);
+    const [copiedSection, setCopiedSection] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const { complete, completion, isLoading } = useCompletion({
@@ -32,17 +32,48 @@ export default function LinkedInOptimizer() {
         },
     });
 
-    const handleCopy = async () => {
-        if (!completion) return;
+    const handleCopy = async (id: string, text: string) => {
+        if (!text) return;
         try {
-            await navigator.clipboard.writeText(completion);
-            setCopied(true);
-            toast.success("Ready to paste! Content copied to clipboard.");
-            setTimeout(() => setCopied(false), 2000);
+            await navigator.clipboard.writeText(text);
+            setCopiedSection(id);
+            toast.success("Copied to clipboard!");
+            setTimeout(() => setCopiedSection(null), 2000);
         } catch (err) {
             toast.error("Failed to copy. Please try selecting the text manually.");
         }
     };
+
+    // --- Output parsing logic ---
+    const extractSection = (content: string, startRegex: RegExp, endRegex?: RegExp) => {
+        const startMatch = content.match(startRegex);
+        if (!startMatch || startMatch.index === undefined) return "";
+
+        const remainingAfterStart = content.substring(startMatch.index + startMatch[0].length);
+
+        if (endRegex) {
+            const endMatch = remainingAfterStart.match(endRegex);
+            if (endMatch && endMatch.index !== undefined) {
+                return remainingAfterStart.substring(0, endMatch.index).trim();
+            }
+        }
+
+        return remainingAfterStart.trim();
+    };
+
+    const headlinesText = extractSection(completion, /^.*Headlines.*$/im, /^.*About Section.*$/im);
+    const aboutText = extractSection(completion, /^.*About Section.*$/im, /^.*Experience Section.*$/im);
+    const experienceText = extractSection(completion, /^.*Experience Section.*$/im, /^.*Positioning Diagnosis.*$/im);
+    const diagnosisText = extractSection(completion, /^.*Positioning Diagnosis.*$/im);
+
+    const sections = [
+        { id: "headlines", title: "🚀 Attention-Grabbing Headlines", content: headlinesText },
+        { id: "about", title: "🔥 Magnetic About Section", content: aboutText },
+        { id: "experience", title: "💼 Experience Section Rewrite", content: experienceText },
+        { id: "diagnosis", title: "📊 Positioning Diagnosis", content: diagnosisText }
+    ];
+
+    const hasAnySection = sections.some(s => s.content.length > 0);
 
     const handleOptimize = async (e: FormEvent) => {
         e.preventDefault();
@@ -243,25 +274,56 @@ export default function LinkedInOptimizer() {
                                 </Badge>
                                 {isLoading && <RefreshCw className="h-3 w-3 animate-spin text-muted-foreground" />}
                             </div>
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-8 gap-1 text-muted-foreground hover:text-foreground"
-                                onClick={handleCopy}
-                                disabled={!completion || isLoading}
-                            >
-                                {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
-                                {copied ? 'Copied' : 'Copy'}
-                            </Button>
                         </div>
 
-                        {/* Output Markdown Window */}
-                        <div className="flex-1 overflow-y-auto p-6 lg:p-8">
-                            <div className="prose prose-sm md:prose-base dark:prose-invert max-w-none">
-                                <ReactMarkdown>
-                                    {completion || "*Waiting for DeepSeek to start streaming...*"}
-                                </ReactMarkdown>
-                            </div>
+                        {/* Output Sections */}
+                        <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-6">
+                            {hasAnySection ? (
+                                sections.map(section => (
+                                    section.content ? (
+                                        <div key={section.id} className="bg-background border rounded-xl shadow-sm overflow-hidden flex flex-col">
+                                            <div className="bg-muted/30 px-4 py-3 border-b flex items-center justify-between">
+                                                <h3 className="font-semibold text-sm">{section.title}</h3>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="h-8 gap-1 text-muted-foreground hover:text-foreground"
+                                                    onClick={() => handleCopy(section.id, section.content)}
+                                                    disabled={!section.content}
+                                                >
+                                                    {copiedSection === section.id ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
+                                                    <span className="text-xs">{copiedSection === section.id ? 'Copied' : 'Copy'}</span>
+                                                </Button>
+                                            </div>
+                                            <div className="p-4 prose prose-sm md:prose-base dark:prose-invert max-w-none">
+                                                <ReactMarkdown>{section.content}</ReactMarkdown>
+                                            </div>
+                                        </div>
+                                    ) : null
+                                ))
+                            ) : completion ? (
+                                <div className="bg-background border rounded-xl shadow-sm overflow-hidden flex flex-col">
+                                    <div className="bg-muted/30 px-4 py-3 border-b flex items-center justify-between">
+                                        <h3 className="font-semibold text-sm">Full Output</h3>
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            className="h-8 gap-1 text-muted-foreground hover:text-foreground"
+                                            onClick={() => handleCopy("all", completion)}
+                                        >
+                                            {copiedSection === "all" ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
+                                            <span className="text-xs">{copiedSection === "all" ? 'Copied' : 'Copy'}</span>
+                                        </Button>
+                                    </div>
+                                    <div className="p-4 prose prose-sm md:prose-base dark:prose-invert max-w-none">
+                                        <ReactMarkdown>{completion}</ReactMarkdown>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="text-muted-foreground italic flex justify-center items-center h-full pt-12">
+                                    Waiting for DeepSeek to start streaming...
+                                </div>
+                            )}
                         </div>
                     </div>
                 )}
