@@ -73,14 +73,14 @@ export default function Home() {
               <div className="h-12 w-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: "#05514915" }}>
                 <MessagesSquare className="h-6 w-6" style={{ color: "#055149" }} />
               </div>
-              <CardTitle>Negotiation Message Generator</CardTitle>
+              <CardTitle>Leadership Negotiation Generator</CardTitle>
               <CardDescription className="text-base pt-2">
-                Generate confident and strategic salary or promotion requests.
+                Craft empathetic, authoritative, and strategic messages to resolve conflicts and lead effectively.
               </CardDescription>
             </CardHeader>
             <CardFooter>
-              <Button variant="outline" className="w-full" asChild disabled>
-                <Link href="/negotiation-generator">Coming Soon</Link>
+              <Button variant="outline" className="w-full" asChild>
+                <Link href="/negotiation-generator">Open Tool →</Link>
               </Button>
             </CardFooter>
           </Card>
