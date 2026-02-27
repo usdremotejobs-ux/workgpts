@@ -5,9 +5,13 @@ interface ToolLayoutProps {
     title: string;
     description: string;
     children: ReactNode;
+    /** Override the badge label (defaults to "Free Tool – No Login Required") */
+    badge?: string;
+    /** Render a fully custom headline instead of the auto-split title */
+    titleNode?: ReactNode;
 }
 
-export function ToolLayout({ title, description, children }: ToolLayoutProps) {
+export function ToolLayout({ title, description, children, badge, titleNode }: ToolLayoutProps) {
     return (
         <div className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
             {/* Section 1: Header */}
@@ -17,13 +21,19 @@ export function ToolLayout({ title, description, children }: ToolLayoutProps) {
                     className="px-3 py-1 text-sm transition-colors"
                     style={{ backgroundColor: "#05514918", color: "#055149" }}
                 >
-                    Free Tool – No Login Required
+                    {badge ?? "Free Tool – No Login Required"}
                 </Badge>
-                <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
-                    <span style={{ color: "#055149" }}>{title.split(" ").slice(0, -1).join(" ")}</span>
-                    {" "}{title.split(" ").slice(-1)}
-                </h1>
-                <p className="max-w-xl mx-auto text-lg text-muted-foreground">
+                {titleNode ? (
+                    <h1 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
+                        {titleNode}
+                    </h1>
+                ) : (
+                    <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
+                        <span style={{ color: "#055149" }}>{title.split(" ").slice(0, -1).join(" ")}</span>
+                        {" "}{title.split(" ").slice(-1)}
+                    </h1>
+                )}
+                <p className="max-w-xl mx-auto text-base text-muted-foreground">
                     {description}
                 </p>
             </div>

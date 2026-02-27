@@ -141,13 +141,16 @@ export default function LinkedInOptimizer() {
                     className="px-3 py-1 text-sm transition-colors"
                     style={{ backgroundColor: "#05514918", color: "#055149" }}
                 >
-                    Free Tool – No Login Required
+                    Linkedin profile Optimizer
                 </Badge>
-                <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
-                    <span style={{ color: "#055149" }}>LinkedIn Profile</span> Optimizer
+                <h1 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
+                    Get Found on Linkedin Searches{" "}
+                    <span style={{ color: "#055149" }}>&amp; Land More Recruiter Messages</span>
                 </h1>
-                <p className="max-w-xl mx-auto text-lg text-muted-foreground">
-                    Upload your LinkedIn PDF export and get an AI-powered rewrite of your headline, about section, and experience bullets.
+                <p className="max-w-xl mx-auto text-base text-muted-foreground">
+                    Upload your LinkedIn profile PDF. We&apos;ll rewrite your headline, about
+                    section, and experience with the right keywords and skills – so you
+                    show up in more searches.
                 </p>
             </div>
 
@@ -183,7 +186,7 @@ export default function LinkedInOptimizer() {
                                     <CloudUpload className="h-7 w-7" style={{ color: "#055149" }} />
                                 </div>
                                 <p className="font-semibold text-base">Click or drag your LinkedIn PDF</p>
-                                <p className="text-sm text-muted-foreground mt-1 max-w-[260px]">LinkedIn → More → Save to PDF</p>
+                                <p className="text-sm text-muted-foreground mt-1 max-w-[280px]">Open your profile on desktop -&gt; Click<br />Resources -&gt; Save to PDF</p>
                                 <div className="mt-5 flex items-center gap-2 text-xs text-muted-foreground">
                                     <Linkedin className="h-3.5 w-3.5" />
                                     <span>Parsed 100% in your browser — never sent to any server</span>

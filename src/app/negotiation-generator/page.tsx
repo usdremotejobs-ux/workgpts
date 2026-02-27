@@ -71,7 +71,14 @@ export default function NegotiationGenerator() {
     return (
         <ToolLayout
             title="Leadership Negotiation Generator"
-            description="Turn difficult workplace conversations into clear, confident messages. Built for managers and seniors who lead people."
+            badge="Workplace Communication Assistant"
+            titleNode={
+                <>
+                    Tired of Excuses from your team?{" "}
+                    <span style={{ color: "#055149" }}>Write with Authority &amp; Get things done</span>
+                </>
+            }
+            description="Rewrite your message using proven leadership negotiation styles - so your team responds and acts without excuses"
         >
             {/* LEFT SIDE: Input */}
             <div className="flex flex-col space-y-6">
@@ -81,7 +88,11 @@ export default function NegotiationGenerator() {
                             Describe the situation
                         </label>
                         <Textarea
-                            placeholder="eg: My junior keeps missing deadlines. I've reminded them twice and nothing has changed."
+                            placeholder={`eg: My junior keeps missing deadlines. I've reminded them twice and nothing has changed.
+
+eg: My team mate always misses meetings.
+
+eg: My colleague never does the task I assign him.`}
                             value={input}
                             onChange={handleInputChange}
                             className="min-h-[220px] resize-none focus-visible:ring-primary shadow-sm"

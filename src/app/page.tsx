@@ -1,19 +1,53 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { BriefcaseBusiness, UserRoundSearch, MessagesSquare } from "lucide-react";
 
+const CYCLE_PHRASES = [
+  "To Get More\nWork Done",
+  "To Promote\nFaster",
+  "To Switch\nJobs",
+];
+
 export default function Home() {
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Fade out
+      setVisible(false);
+      setTimeout(() => {
+        setPhraseIndex((prev) => (prev + 1) % CYCLE_PHRASES.length);
+        setVisible(true);
+      }, 400); // wait for fade-out then swap + fade in
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
       {/* Hero Section */}
       <section className="text-center space-y-6 pb-16 pt-8 md:pb-24">
-        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight">
-          Upgrade Your Career Profile With{" "}
-          <span style={{ color: "#055149" }}>AI</span>
+        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
+          Free AI Tools for Employees
+          <span
+            style={{
+              color: "#055149",
+              transition: "opacity 0.4s ease",
+              opacity: visible ? 1 : 0,
+              display: "block",
+            }}
+          >
+            {CYCLE_PHRASES[phraseIndex]}
+          </span>
         </h1>
         <p className="max-w-2xl mx-auto text-xl text-muted-foreground">
-          Generate professional buzzwords, optimize your LinkedIn profile, and craft powerful negotiation messages in seconds.
+          Generate professional buzzwords, optimize your Linkedin profile, and craft
+          powerful negotiation messages in seconds.
         </p>
         <div className="pt-4 mt-8 flex justify-center gap-4">
           <Button
@@ -37,9 +71,9 @@ export default function Home() {
               <div className="h-12 w-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: "#05514915" }}>
                 <BriefcaseBusiness className="h-6 w-6" style={{ color: "#055149" }} />
               </div>
-              <CardTitle>Professional Buzzword Generator</CardTitle>
+              <CardTitle>Corporate Buzzword Generator</CardTitle>
               <CardDescription className="text-base pt-2">
-                Transform simple work statements into executive-level achievement bullets.
+                Transform simple work statements into Corporate-Level Achievement Bullets.
               </CardDescription>
             </CardHeader>
             <CardFooter>
@@ -55,9 +89,9 @@ export default function Home() {
               <div className="h-12 w-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: "#05514915" }}>
                 <UserRoundSearch className="h-6 w-6" style={{ color: "#055149" }} />
               </div>
-              <CardTitle>LinkedIn Profile Optimizer</CardTitle>
+              <CardTitle>Linkedin profile Optimizer</CardTitle>
               <CardDescription className="text-base pt-2">
-                Improve your headline, summary, and experience section with AI.
+                Improve your Linkedin profile with AI and Get More Messages from Recruiters
               </CardDescription>
             </CardHeader>
             <CardFooter>
@@ -73,9 +107,9 @@ export default function Home() {
               <div className="h-12 w-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: "#05514915" }}>
                 <MessagesSquare className="h-6 w-6" style={{ color: "#055149" }} />
               </div>
-              <CardTitle>Leadership Negotiation Generator</CardTitle>
+              <CardTitle>Workplace Communication Assistant</CardTitle>
               <CardDescription className="text-base pt-2">
-                Craft empathetic, authoritative, and strategic messages to resolve conflicts and lead effectively.
+                Tired of Excuses from your team? Write with Authority &amp; Get things done
               </CardDescription>
             </CardHeader>
             <CardFooter>

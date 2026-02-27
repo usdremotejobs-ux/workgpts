@@ -71,7 +71,14 @@ export default function BuzzwordGenerator() {
     return (
         <ToolLayout
             title="Corporate Buzzword Generator"
-            description="Stop underselling your work. Transform everyday tasks into executive-level achievement bullets that leadership understands and rewards."
+            badge="Corporate Buzzword Generator"
+            titleNode={
+                <>
+                    Write Work Updates That Will{" "}
+                    <span style={{ color: "#055149" }}>Get You Noticed in Your Workplace</span>
+                </>
+            }
+            description="Stop underselling your work. Turn simple updates into powerful, corporate-ready statements that you can use in weekly updates, performance appraisals and hike meetings."
         >
             {/* LEFT SIDE: Input */}
             <div className="flex flex-col space-y-6">
@@ -81,7 +88,11 @@ export default function BuzzwordGenerator() {
                             Share your task
                         </label>
                         <Textarea
-                            placeholder="eg: I've made 5 sales today from facebook ads"
+                            placeholder={`eg: I've made 5 sales today from the fb ads I've setup
+
+eg: I've fixed bugs and deployed the main project
+
+eg: I've redesigned the whole dashboard's UI based on the user behaviour`}
                             value={input}
                             onChange={handleInputChange}
                             className="min-h-[220px] resize-none focus-visible:ring-primary shadow-sm"
